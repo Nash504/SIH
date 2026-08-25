@@ -20,6 +20,28 @@ uv run fastapi dev src/sih/main.py
 For a local MongoDB server, use `mongodb://localhost:27017` (the default) and set only
 `MONGODB_DATABASE` if needed. Do not commit credentials or a `.env` file containing them.
 
+### SMS setup
+
+The `POST /send-sms` endpoint uses Twilio. Set these variables before starting the API:
+
+```powershell
+$env:TWILIO_ACCOUNT_SID = "your-account-sid"
+$env:TWILIO_AUTH_TOKEN = "your-auth-token"
+$env:TWILIO_FROM_NUMBER = "+15551234567"
+```
+
+`TWILIO_FROM_NUMBER` must be a real Twilio phone number owned by your account,
+not the example number above.
+
+The request body must contain an E.164 phone number and message:
+
+```json
+{
+	"phone_number": "+15558675309",
+	"message": "Alert: check crops."
+}
+```
+
 ## Sending a reading
 
 `POST /send` accepts JSON in this shape:
@@ -33,3 +55,7 @@ For a local MongoDB server, use `mongodb://localhost:27017` (the default) and se
 	"sensor_id": "device-001"
 }
 ```
+
+For a quick database test, send `POST /send` with no request body. The API inserts
+a dummy reading with `sensor_id` set to `dummy-sensor`, creating the
+`sih.sensor_readings` collection in MongoDB if it does not already exist.
