@@ -19,6 +19,8 @@ client = MongoClient(
 def get_sensor_readings() -> Collection:
     return client[MONGODB_DATABASE]["sensor_readings"]
 
+def get_alerts() -> Collection:
+    return client[MONGODB_DATABASE]["alerts"]
 
 def close_client() -> None:
     client.close()

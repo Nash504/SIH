@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
 from database.mongodb import get_sensor_readings
-
+from controllers.alert_controller import create_alert
 
 TEMP_THRESHOLD = 2.0
 HUMIDITY_THRESHOLD = 5.0
@@ -118,10 +118,21 @@ def check_anomaly():
             confirmed_anomalies.append(sensor_id)
 
     if confirmed_anomalies:
+        alerts = []
+
+        for sensor_id in confirmed_anomalies:
+            alert = create_alert(
+                sensor_id,
+                f"Potential crop anomaly detected in sensor {sensor_id}."
+            )
+
+            alerts.append(alert)
+
         return {
             "anomaly": True,
             "message": "Anomaly has persisted for at least 5 minutes.",
-            "sensors": confirmed_anomalies
+            "sensors": confirmed_anomalies,
+            "alerts": alerts,
         }
 
     return {
