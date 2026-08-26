@@ -14,7 +14,7 @@ The API stores readings in the `sensor_readings` collection in the `sih` databas
 $env:MONGODB_URI = "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/?retryWrites=true&w=majority"
 $env:MONGODB_DATABASE = "sih"
 uv sync
-uv run fastapi dev src/sih/main.py
+uv run fastapi dev app/main.py
 ```
 
 For a local MongoDB server, use `mongodb://localhost:27017` (the default) and set only
