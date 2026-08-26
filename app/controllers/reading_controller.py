@@ -30,7 +30,7 @@ INPUT:
     "temp": 32.4,
     "humidity": 71.2,
     "gas": 50.0,
-    "heatIndex": 35.6
+    "heat_Index": 35.6
   }
 }
 """
@@ -58,3 +58,15 @@ def get_readings_by_sensor(sensor_id: str):
         reading["_id"] = str(reading["_id"])
 
     return readings
+
+def get_sensors():
+    collection = get_sensor_readings()
+
+    sensors = collection.distinct("sensor_id")
+
+    return [
+        {
+            "sensor_id": sensor_id
+        }
+        for sensor_id in sensors
+    ]
