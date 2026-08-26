@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 
 from routes.reading_routes import router as reading_router
+from routes.sensor_routes import router as sensor_router
 
 
 app = FastAPI(title="Drishti API")
 
-
+app.include_router(sensor_router)
 app.include_router(reading_router) # like app.use("/api/readings", readingRouter);
 
 
