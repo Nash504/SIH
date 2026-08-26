@@ -1,15 +1,23 @@
 from fastapi import APIRouter
 
-from controllers.reading_controller import create_reading
+from controllers.reading_controller import (
+    create_reading,
+    get_all_readings,
+)
 from models.sensor import SensorPayload
 
 
 router = APIRouter(
     prefix="/api/readings",
-    tags=["Readings"] # for swagger
+    tags=["Readings"]
 )
 
 
 @router.post("/")
 def add_reading(payload: SensorPayload):
     return create_reading(payload)
+
+
+@router.get("/")
+def read_readings():
+    return get_all_readings()
