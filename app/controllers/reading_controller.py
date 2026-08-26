@@ -44,3 +44,17 @@ def get_all_readings():
         reading["_id"] = str(reading["_id"])
 
     return readings
+
+def get_readings_by_sensor(sensor_id: str):
+    collection = get_sensor_readings()
+
+    readings = list(
+        collection.find(
+            {"sensor_id": sensor_id}
+        ).sort("timestamp", -1)
+    )
+
+    for reading in readings:
+        reading["_id"] = str(reading["_id"])
+
+    return readings
