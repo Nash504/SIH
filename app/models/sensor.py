@@ -15,6 +15,19 @@ class SensorPayload(BaseModel):
     timestamp: datetime
     reading: SensorReading
 
+"""
+This is what is gonna get sent to the API endpoint. Example:
+{
+    "sensor_id": "S2",
+    "timestamp": "2026-08-26T17:30:00",
+    "reading": {
+        "temp": 32.4,
+        "humidity": 71.2,
+        "gas": 50.0,
+        "heat_Index": 35.6
+    }
+}
+"""
 
 class SmsPayload(BaseModel):
     model_config = ConfigDict(extra="forbid")
