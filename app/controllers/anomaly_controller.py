@@ -37,6 +37,20 @@ def check_anomaly():
         return {
             "anomaly": False,
             "message": "Not enough sensor readings."
+        }   
+
+    timestamps = [
+        reading["timestamp"]
+        for reading in latest_readings.values()
+    ]
+
+    latest_timestamp = max(timestamps)
+    oldest_timestamp = min(timestamps)
+
+    if latest_timestamp - oldest_timestamp > timedelta(minutes=2):
+        return {
+            "anomaly": False,
+            "message": "Sensor readings are not synchronized."
         }
 
     sensors_list = list(latest_readings.items())
